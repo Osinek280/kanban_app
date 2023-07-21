@@ -13,7 +13,9 @@ const Sidebar = () => {
 
   const { files } = useFileContext();
 
-  // const { id } = useParams()
+  const { id } = useParams()
+
+  console.log(id)
 
   return (
     <nav className="navbar">
