@@ -1,0 +1,58 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  color: white;
+  border-radius: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 82vh;
+  border-radius: 15px;
+  width: 80px;
+}
+
+.icon {
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  font-size: 25px;
+  color: white;
+}
+
+.icon div {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon p {
+  font-size: 14px;
+}
+
+.tool-tip-text {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 5px);
+  transform: translateY(-50%);
+  background-color: black;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.icon:hover .tool-tip-text {
+  visibility: visible;
+}
+
+.vertical-line {
+  background: white;
+  height: 3px;
+  border-radius: 10px;
+  width: 50%;
+  margin: 3px 0;
+}
