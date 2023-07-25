@@ -5,7 +5,6 @@ import { useEffect, useState, } from 'react';
 import { useFileContext } from '../../context/FileContext';
 import { useUserContext } from '../../context/UserContext';
 import { HiDotsVertical } from 'react-icons/hi';
-import DraggableList from 'react-draggable-list';
 
 interface Task {
   id: string;

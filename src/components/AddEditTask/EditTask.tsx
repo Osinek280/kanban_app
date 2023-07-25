@@ -31,10 +31,12 @@ function EditTask() {
     const file = files.find(file => file.id === kanbanId);
     if (file) {
       const findTask = file?.tasks.find((task: Task) => task.id === taskId)
-      setTask(findTask);
-      setSubtasks(findTask.subtasks)
-      setSections(file.sections);    
-      setPriority(findTask.priority)
+      if(findTask) {
+        setTask(findTask);
+        setSubtasks(findTask.subtasks)
+        setSections(file.sections);    
+        setPriority(findTask.priority)
+      }
     }
   }, [files, kanbanId, taskId]); 
 

@@ -20,5 +20,6 @@ export default defineConfig({
   plugins: [react()],
   define: {
     'process': JSON.stringify(processShim)
-  }
+  },
+  base: '/kanban_app/'
 })
