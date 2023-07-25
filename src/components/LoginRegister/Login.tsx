@@ -10,9 +10,10 @@ function LoginModal() {
 
   const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { username, password } = event.currentTarget.elements as any;
+    const { username, password, rememberMe } = event.currentTarget.elements as any;
 
-    login(username.value, password.value)
+    login(username.value, password.value, rememberMe.checked)
+
   };
 
   return (
@@ -26,7 +27,7 @@ function LoginModal() {
         <div className="user-box">
           <input type={passwordVisibly ? 'text' : 'password'} name="password" required />
           <label>Password</label>
-          <button 
+          <span 
             className="deputy" 
             onClick={(e) => {
               e.preventDefault() 
@@ -34,7 +35,11 @@ function LoginModal() {
             }}
           >
             {passwordVisibly ? <IoIosEye /> : <IoIosEyeOff />}
-          </button>
+          </span>
+        </div>
+        <div className="remember-me">
+          <input type="checkbox" id="remember-me-check-box" name="rememberMe" />
+          <label htmlFor="remember-me-check-box">Remember me</label>
         </div>
         <div className="toggle_label">
           <Link to="/register" >Sign up</Link>

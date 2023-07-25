@@ -8,12 +8,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 82vh;
   border-radius: 15px;
   width: 80px;
 }
 
 .icon {
+  max-height: 50px;
   text-decoration: none;
   cursor: pointer;
   text-align: center;
@@ -32,6 +32,7 @@
 }
 
 .tool-tip-text {
+  z-index: 2;
   visibility: hidden;
   position: absolute;
   top: 50%;
@@ -55,4 +56,9 @@
   border-radius: 10px;
   width: 50%;
   margin: 3px 0;
+}
+
+.log-out{
+  margin-top: auto;
+  font-size: 30px;
 }

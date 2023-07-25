@@ -1,22 +1,18 @@
 import './SideBar.css';
 import { BsHouseDoor, BsHouseFill } from 'react-icons/bs';
 import { BiBook } from 'react-icons/bi';
-// import { BiSolidSearchAlt2 } from 'react-icons/bi';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FaBook } from 'react-icons/fa';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useFileContext } from '../../context/FileContext';
-import { IoDocumentTextOutline, IoDocumentTextSharp } from 'react-icons/io5';
+import { IoDocumentTextOutline } from 'react-icons/io5';
+import { MdLogin } from 'react-icons/md'
 
 const Sidebar = () => {
   const location = useLocation();
 
   const { files } = useFileContext();
-
-  const { id } = useParams()
-
-  console.log(id)
-
+  
   return (
     <nav className="navbar">
       <Link to="/home" className="icon">
@@ -38,6 +34,9 @@ const Sidebar = () => {
           <p>{file.name}</p>
         </Link>
       ))}
+      <Link to={'/log-out'} className='icon log-out'>
+        <MdLogin />
+      </Link>
     </nav>
   );
 };

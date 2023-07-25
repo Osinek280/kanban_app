@@ -56,19 +56,6 @@
   justify-content: center;
 }
 
-.toggle_label {
-  margin-left: auto;
-}
-
-.toggle_label a{
-  color: #5a5a5a;
-  font-weight: 700;
-}
-
-.toggle_label a:hover {
-  color: #007bff;
-}
-
 .button-container{
   display: flex;
   justify-content: center;

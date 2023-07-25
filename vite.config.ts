@@ -5,7 +5,7 @@ const environment =
   process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 const apiUrls = {
-  production: "https://messenger-api-vcnc.onrender.com",
+  production: "https://kanban-api-x5z5.onrender.com",
   development: "http://localhost:8000"
 };
 

@@ -1,32 +1,38 @@
 import './NavBar.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link, useParams } from 'react-router-dom';
+import { useFileContext } from '../../context/FileContext';
 
 function Navbar() {
+  const { kanbanId } = useParams();
   const location = useLocation();
+  const { searchValue, setSearchValue } = useFileContext()
+
   return (
     <header className="main-header">
       <span className="text">Hello</span>
-      {location.pathname === '/files' ? (
+      {location.pathname.startsWith('/files') ? (
         <>
           <span className="search">
             <input
               className="search-input" 
               placeholder="Search"
+              defaultValue={searchValue}
+              onChange={(e) => {setSearchValue(e.currentTarget.value)}}
             />
           </span>
-          <button className="new-kanban-btn">
+          <Link to={`/files/new`} className="new-kanban-btn">
             Add New Kanban
-          </button>
+          </Link>
         </> 
       ) : null}
       {location.pathname.startsWith('/kanban') ? (
         <>
-          <button className="new-task-btn">
+          <Link to={`/kanban/${kanbanId}/new-task`} className="new-task-btn">
             Add New Task
-          </button>
-          <button className="new-section-btn">
+          </Link>
+          <Link to={`/kanban/${kanbanId}/new-section`} className="new-section-btn">
             Add New Section
-          </button>
+          </Link>
         </>
       ) : null}
     </header>

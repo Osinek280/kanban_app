@@ -5,6 +5,7 @@
 }
 
 .new-task-btn, .new-section-btn, .new-kanban-btn, .personal-data-btn {
+  text-decoration: none;
   display: flex;
   align-items: center;
   border: none;

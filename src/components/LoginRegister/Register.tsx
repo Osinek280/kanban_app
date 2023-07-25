@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 
 function RegisterModal() {
   const [passwordVisibly, setPasswordVisibly] = useState(false);
+  const navigate = useNavigate()
 
   const handleRegisterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,7 +16,21 @@ function RegisterModal() {
       password: password.value,
     };
 
-    console.log(registerData)
+    fetch(`${process.env.API_URL}/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(registerData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        navigate('/login')
+      })
+      .catch((error) => {
+        console.error("Błąd:", error);
+      });
   };
 
   return (
@@ -45,7 +60,7 @@ function RegisterModal() {
             required
           />
           <label>Password</label>
-          <button 
+          <span 
             className="deputy" 
             onClick={(e) => {
               e.preventDefault() 
@@ -53,7 +68,7 @@ function RegisterModal() {
             }}
           >
             {passwordVisibly ? <IoIosEye /> : <IoIosEyeOff />}
-          </button>
+          </span>
         </div>
         <div className="toggle_label">
           <Link to={'/login'}>Login</Link>

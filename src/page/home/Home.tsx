@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import KanbanImage from '../../assets/image/kanbanImage.svg'
+import KanbanImage from '../../assets/image/kanban-image.svg'
 
 function Home({ children }: { children: ReactNode }) {
   return (
