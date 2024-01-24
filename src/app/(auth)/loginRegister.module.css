@@ -1,0 +1,115 @@
+.login-box,
+.register-box {
+  width: 300px;
+  padding: 40px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.login-box form,
+.register-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-register-container{
+  display: flex;
+  gap: 30px;
+}
+
+.login-box h2,
+.register-box h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  color: #333;
+  text-align: center;
+}
+
+.remember-me{
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.user-box {
+  position: relative;
+}
+
+.user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #333;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  background: transparent;
+}
+
+.user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #333;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.user-box input:focus ~ label,
+.user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #007bff;
+  font-size: 12px;
+}
+
+.submit-btn {
+  display: inline-block;
+  background: #007bff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+}
+
+.deputy{
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  position: absolute;
+  right: 0;
+  top: 40%;
+  transform: translate(-60%, -50%);
+  cursor: pointer;
+  color: #a8a8a8;
+}
+
+.user-box{
+  position: relative;
+}
+
+.toggle_label {
+  margin-left: auto;
+  margin-top: -5px;
+}
+
+.toggle_label a{
+  color: #5a5a5a;
+  font-weight: 700;
+}
+
+.toggle_label a:hover {
+  color: #007bff;
+}
