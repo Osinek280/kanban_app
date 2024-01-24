@@ -1,0 +1,97 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  height: 100%;
+  gap: 40px;
+}
+
+.home-header {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+
+.kanban-state {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  width: 50%;
+}
+
+.kanban-description {
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-state-text, .kanban-description-header {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+
+.kanban-description-header{
+  margin-bottom: 30px;
+}
+
+.kanban-state img {
+  width: 500px;
+  object-fit: contain;
+}
+
+.container {
+  display: flex;
+  gap: 70px;
+}
+
+.home-right-side{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.button-container{
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+}
+
+.login-register-btn-container{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-btn, .register-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-btn {
+  background-color: #28a745;
+}
+
+.login-btn:hover {
+  background-color: #0056b3;
+}
+
+.register-btn:hover {
+  background-color: #218838;
+}
+

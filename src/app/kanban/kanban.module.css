@@ -1,0 +1,143 @@
+.container-for-task {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 25px;
+}
+  
+.task-container {
+  position: relative;
+  border-radius: 7px;
+  flex: 1;
+  box-shadow: 2px 2px 24px -4px rgba(66, 68, 90, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.task-list {
+  flex: 1;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px;
+}
+
+.task-container-header{
+  display: flex;
+  padding: 10px 20px 10px 10px;
+  cursor: pointer;
+}
+
+.task-container-header input {
+  font-size: 20px;
+  font-weight: 600;
+  outline: none;
+}
+  
+.task {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  gap: 5px;
+  position: relative;
+}
+
+.remove-task-btn{
+  padding: 5px 0;
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 5px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.task:hover .remove-task-btn {
+  opacity: 1;
+}
+
+.task:hover {
+  background-color: #eaeaea;
+}
+
+.task .task-primary {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.task-name {
+  font-size: 22px;
+}
+
+.task-container-header {
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+}
+
+.task-container-header-input {
+  flex: 1;
+  padding: 5px;
+  margin-right: 10px;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  outline: none;
+}
+
+
+.task-container-header-input{
+  width: 100%;
+  border: none;
+  background: transparent;
+}
+  
+.text{
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.context-menu {
+  z-index: 1 !important;
+  position: absolute;
+  right: 0;
+  transform: translate(-5%, -90%);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: black;
+  border-radius: 5px;
+  padding: 8px;
+  box-shadow: 2px 2px 24px -4px rgba(66, 68, 90, 0.6);
+}
+
+.context-menu .item {
+  cursor: pointer;
+  padding: 0 5px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #333;
+}
+
+.item:hover {
+  background: #f2f2f2;
+}
