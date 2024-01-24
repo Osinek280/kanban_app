@@ -1,8 +1,12 @@
+"use client"
+import { useState } from "react";
 import Link from "next/link";
 import HomeLayout from "@/app/homeLayout";
 import styles from "../loginRegister.module.css";
+import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 
 const Register = () => {
+  const [passwordVisibly, setPasswordVisibly] = useState(false);
   return (
     <HomeLayout>
       <div className={styles["register-box"]}>
@@ -27,12 +31,18 @@ const Register = () => {
           <div className={styles["user-box"]}>
             <input
               name="password"
+              type={passwordVisibly ? 'text' : 'password'}
               required
             />
             <label>Password</label>
             <span
               className={styles.deputy}
+              onClick={(e) => {
+                e.preventDefault() 
+                setPasswordVisibly(!passwordVisibly) 
+              }}
             >
+              {passwordVisibly ? <IoIosEye /> : <IoIosEyeOff />}
             </span>
           </div>
           <div className={styles["toggle_label"]}>
