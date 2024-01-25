@@ -14,7 +14,7 @@ const Sidebar = () => {
         <FontAwesomeIcon icon={faSearch} className={styles["my-icon"]} />
         <span className={styles["tool-tip-text"]}>Search</span>
       </Link>
-      <Link href="/" className={styles.icon}>
+      <Link href="/files" className={styles.icon}>
         <FontAwesomeIcon 
           icon={faBook} 
           className={styles["my-icon"]} 
