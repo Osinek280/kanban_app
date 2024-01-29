@@ -101,8 +101,20 @@
 }
 
 .toggle_label {
+  /* background: palevioletred; */
   margin-left: auto;
+  margin-top: -20px;
+}
+
+.error-box {
   margin-top: -5px;
+  /* background: palegreen; */
+}
+
+.error-message{
+  color: #FF0000;
+  font-weight: 600;
+  font-size: 15px;
 }
 
 .toggle_label a{

@@ -33,3 +33,14 @@
 .icon:hover .tool-tip-text {
   display: block;
 }
+
+.HUJ{
+  margin-top: auto;
+  font-size: 30px;
+
+  width: 25px;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}

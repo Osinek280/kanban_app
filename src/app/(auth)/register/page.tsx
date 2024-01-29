@@ -5,13 +5,18 @@ import HomeLayout from "@/app/homeLayout";
 import styles from "../loginRegister.module.css";
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import navbarStyles from "@/components/navbar.module.css"
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+
   const [passwordVisibly, setPasswordVisibly] = useState(false);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("")
+
+  const router = useRouter();
   
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,12 +30,16 @@ const Register = () => {
         body: JSON.stringify({name, email, password}),
       });
 
-      if (response.ok) {
-        // Obsługa pozytywnej odpowiedzi
+      if(!response.ok) {
+        const { message } = await response.json()
+        setError(message)
+
+        setName("")
+        setEmail("")
+        setPassword("")
+      }else {
+        router.push("/")
         console.log('Dane zostały wysłane pomyślnie!');
-      } else {
-        // Obsługa błędu
-        console.error('Wystąpił błąd podczas wysyłania danych.');
       }
     } catch (error) {
       console.error('Wystąpił błąd:', error);
@@ -82,6 +91,11 @@ const Register = () => {
                 {passwordVisibly ? <IoIosEye /> : <IoIosEyeOff />}
               </span>
             </div>
+            {error && (
+              <div className={styles["error-box"]}>
+                <p className={styles["error-message"]}>{error}</p>
+              </div>
+            )}
             <div className={styles["toggle_label"]}>
               <Link href={'/login'}>Login</Link>
             </div>
