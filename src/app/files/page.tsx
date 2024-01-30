@@ -3,6 +3,7 @@ import navbarStyles from "@/components/navbar.module.css"
 import Link from "next/link";
 import styles from "./file.module.css"
 import { useEffect, useState } from 'react';
+import { useSession } from "next-auth/react";
 
 interface Task {
   id: string;
@@ -24,11 +25,18 @@ interface File {
 
 const Files = () => {
   const [files, setFiles] = useState<File[]>([])
+
+  const { data: session } = useSession();
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/files');
+        const response = await fetch('/api/files', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${"userId"}`
+          }
+        });
         if (!response.ok) {
           throw new Error('Błąd pobierania danych');
         }

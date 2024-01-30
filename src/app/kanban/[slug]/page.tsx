@@ -1,7 +1,6 @@
 "use client"
 import styles from "./kanban.module.css"
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { PageProps } from "../../../../.next/types/app/layout";
 
 interface Task {
@@ -59,7 +58,7 @@ const Kanban = ({ params }: PageProps) => {
     return () => {
       
     };
-  }, []); 
+  }, []);
 
   return(
     <div className={styles["container-for-task"]}>
