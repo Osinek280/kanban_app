@@ -1,0 +1,131 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  z-index: 5 !important;
+}
+
+.form {
+  /* margin-top: 160px; */
+  width: 450px;
+  max-height: 100%;
+  overflow-y: auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-18%);
+}
+
+.form-heading {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: none;
+}
+
+.form-textarea {
+  height: 100px;
+}
+
+.subtask-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-submit-button, .add-subtask-button {
+  background-color: #635fc7;
+  color: #fff;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form-submit-button {
+  margin-top: 10px;
+}
+
+.priority-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 20px;
+}
+
+.priority{
+  display: flex;
+  width: 38%;
+}
+
+.priority-label{
+  flex-grow: 1;
+}
+
+.subtask-empty-state{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+.subtask {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.subtask input {
+  width: 100%;
+}
+
+.remove-subtask-btn{
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  margin: 0 5px;
+  margin-left: 12px;
+}
+
+.close-btn{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #333;
+}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "./file.module.css"
 import { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react";
+import NewKanban from "@/components/newKanban/newKanban";
 
 interface Task {
   id: string;
@@ -22,19 +23,24 @@ interface File {
   tasks: Task[];
 }
 
+type Props = {
+  searchParams: Record<string, string> | null | undefined;
+}
 
-const Files = () => {
+const Files = ({ searchParams }: Props) => {
   const [files, setFiles] = useState<File[]>([])
+  const showModal = searchParams?.new
 
   const { data: session } = useSession();
   
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(session?.user.id)
         const response = await fetch('/api/files', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${"userId"}`
+            'Authorization': `${session?.user.id}`
           }
         });
         if (!response.ok) {
@@ -60,6 +66,7 @@ const Files = () => {
 
   return(
     <>
+      {showModal && <NewKanban/>}
       <header className={navbarStyles["main-header"]}>
         <span className={navbarStyles.text}>Files</span>
         <span className={navbarStyles.search}>
@@ -68,7 +75,7 @@ const Files = () => {
             placeholder="Search"
           />
         </span>
-        <Link href={`/files/new`} className={navbarStyles["new-kanban-btn"]}>
+        <Link href={`/files?new=true`} className={navbarStyles["new-kanban-btn"]}>
             Add New Kanban
         </Link>
       </header>

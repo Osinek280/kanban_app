@@ -10,6 +10,7 @@
 
 .icon {
   width: 25px;
+  font-size: 25px;
   cursor: pointer;
   position: relative;
   text-decoration: none;

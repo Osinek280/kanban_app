@@ -1,7 +1,8 @@
 "use client"
-import styles from "./kanban.module.css"
+import styles from "./kanban.module.css";
 import { useState, useEffect } from "react";
-import { PageProps } from "../../../../.next/types/app/layout";
+import navbarStyles from "@/components/navbar.module.css"
+import Link from "next/link";
 
 interface Task {
   id: string;
@@ -20,17 +21,20 @@ interface File {
   tasks: Task[];
 }
 
-interface pageProps {
-  params: { slug: string }
-}
-
 interface PrimaryColors {
   [key: string]: string;
 }
 
-const Kanban = ({ params }: PageProps) => {
+type Props = {
+  params: any
+  searchParams: Record<string, string> | null | undefined;
+}
 
-  const [file, setFile] = useState<File | null>(null)
+const Kanban = ({ params, searchParams }: Props) => {
+  const [file, setFile] = useState<File | null>(null);
+
+  const newTaskModal = searchParams?.["add-task"]
+  const newSectionModal = searchParams?.["add-section"]
 
   const primaryColors: PrimaryColors = {
     high: '#ff0000',
@@ -46,32 +50,44 @@ const Kanban = ({ params }: PageProps) => {
           throw new Error('Błąd pobierania danych');
         }
         const data = await response.json();
-        console.log(data.file)
-        setFile(data.file)
+        console.log(data.file);
+        setFile(data.file);
       } catch (error) {
         console.error('Błąd podczas pobierania danych:', error);
       }
     };
-  
-    fetchData(); 
-  
+
+    fetchData();
+
     return () => {
-      
+      // Clean-up function
     };
   }, []);
 
-  return(
-    <div className={styles["container-for-task"]}>
-      {file?.sections.map((section, index) => (
-        <div className={styles["task-container"]} key={index}>
-          <header className={styles["task-container-header"]}>
-            <input
+  return (
+    <>
+      {newTaskModal && <>task</>}
+      {newSectionModal && <>section</>}
+      <header className={navbarStyles["main-header"]}>
+        <span className={navbarStyles.text}>{file?.name}</span>
+        <Link href={`/kanban/${params.slug}?add-task=true`} className={navbarStyles["new-task-btn"]}>
+            Add New Task
+        </Link>
+        <Link href={`/kanban/${params.slug}?add-section=true`} className={navbarStyles["new-section-btn"]}>
+          Add New Section
+        </Link>
+      </header>
+      <div className={styles["container-for-task"]}>
+        {file?.sections.map((section, index) => (
+          <div className={styles["task-container"]} key={index}>
+            <header className={styles["task-container-header"]}>
+              <input
                 spellCheck={false}
                 className={styles["task-container-header-input"]}
                 defaultValue={section}
-            />
-          </header>
-          <ul className={styles["task-list"]}>
+              />
+            </header>
+            <ul className={styles["task-list"]}>
               {file?.tasks
                 .filter((task) => task.category === section)
                 .map((task, index) => (
@@ -88,10 +104,11 @@ const Kanban = ({ params }: PageProps) => {
                   </li>
                 ))}
             </ul>
+          </div>
+        ))}
       </div>
-      ))}
-    </div>
-  )
-}
+    </>
+  );
+};
 
-export default Kanban
+export default Kanban;

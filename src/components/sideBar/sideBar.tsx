@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSearch, faBook, faArrowRightFromBracket, faFile } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import styles from "./sideBar.module.css"
+import styles from "./sidebar.module.css"
 import { MdLogin } from 'react-icons/md'
 
 const Sidebar = () => {

@@ -62,14 +62,8 @@ export const authOptions: AuthOptions = {
     },
     callbacks: {
         async session({ session, token }) {
-          return { ...session,
-            user: { ...session.user,
-              id: token.sub,
-              isAdmin: token.isAdmin,
-              vendorId: token.vendorId,
-              stripe_id: token.stripeId
-            }
-          }
+          session.user.id = token.sub || ""
+          return session
         },
     }
 }
