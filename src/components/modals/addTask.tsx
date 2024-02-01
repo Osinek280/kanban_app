@@ -1,30 +1,7 @@
 import styles from "./Modals.module.css"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-type Priority = "low" | "medium" | "high"
-
-interface Task {
-  _id: string;
-  title: string;
-  description: string;
-  category: string;
-  priority: string;
-  subtasks: string[];
-}
-
-interface File {
-  _id: string;
-  name: string;
-  ownerId: string;
-  sections: string[];
-  tasks: Task[];
-}
-
-interface AddTaskProps {
-  file: File | null;
-  fileId: string
-}
+import { AddTaskProps, Priority, priorityLevels } from "@/types"
 
 function AddTask({ file, fileId }: AddTaskProps) {
   const [title, setTitle] = useState<string | undefined>("")
@@ -34,7 +11,6 @@ function AddTask({ file, fileId }: AddTaskProps) {
   const [subtasks, setSubtasks] = useState<string[]>([])
   const router = useRouter()
 
-  const priorityLevels: Priority[] = ['low', 'medium', 'high']
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()

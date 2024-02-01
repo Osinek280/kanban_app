@@ -5,29 +5,7 @@ import navbarStyles from "@/components/navbar.module.css"
 import Link from "next/link";
 import AddTask from "@/components/modals/addTask";
 import EditTask from "@/components/modals/EditTask";
-
-type Priority = "low" | "medium" | "high"
-
-interface Task {
-  _id: string;
-  title: string;
-  description: string;
-  category: string;
-  priority: Priority;
-  subtasks: string[];
-}
-
-interface File {
-  _id: string;
-  name: string;
-  ownerId: string;
-  sections: string[];
-  tasks: Task[];
-}
-
-interface PrimaryColors {
-  [key: string]: string;
-}
+import { File, Task, PrimaryColors } from "@/types";
 
 type Props = {
   params: any
@@ -68,7 +46,7 @@ const Kanban = ({ params, searchParams }: Props) => {
     return () => {
       // Clean-up function
     };
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     if(file) {

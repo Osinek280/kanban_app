@@ -1,24 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./Modals.module.css"
 import { useRouter } from "next/navigation";
-
-type Priority = "low" | "medium" | "high"
-
-interface Task {
-  _id: string;
-  title: string;
-  description: string;
-  category: string;
-  priority: Priority;
-  subtasks: string[];
-}
-
-interface EditTaskProps {
-  task: Task | undefined;
-  sections: string[] | undefined;
-  taskId: string;
-  fileId: string;
-}
+import { Priority, EditTaskProps, priorityLevels } from "@/types";
 
 function EditTask({ task, sections, taskId, fileId }: EditTaskProps) {
   const [title, setTitle] = useState<string | undefined>("")
@@ -26,8 +9,6 @@ function EditTask({ task, sections, taskId, fileId }: EditTaskProps) {
   const [category, setCategory] = useState<string | undefined>(undefined)
   const [priority, setPriority] = useState<Priority | undefined>("low")
   const [subtasks, setSubtasks] = useState<string[]>([])
-
-  const priorityLevels: Priority[] = ['low', 'medium', 'high']
 
   const router = useRouter();
 

@@ -5,23 +5,7 @@ import styles from "./file.module.css"
 import { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react";
 import NewKanban from "@/components/modals/newKanban";
-
-interface Task {
-  _id: string;
-  title: string;
-  description: string;
-  category: string;
-  priority: string;
-  subtasks: string[];
-}
-
-interface File {
-  _id: string;
-  name: string;
-  ownerId: string;
-  sections: string[];
-  tasks: Task[];
-}
+import { File } from "@/types";
 
 type Props = {
   searchParams: Record<string, string> | null | undefined;
