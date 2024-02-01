@@ -18,3 +18,20 @@ export async function GET(req: Request) {
     );
   }
 }
+
+export async function POST(req: Request) {
+  try{
+    const { file } = await req.json()
+
+    await connectMongoDB();
+
+    await File.create(file)
+
+    return NextResponse.json({ message: "New kanban added." }, { status: 201 });
+  }catch(error) {
+    return NextResponse.json(
+      { message: "An error occurred while adding the kanban." },
+      { status: 500 }
+    );
+  }
+}

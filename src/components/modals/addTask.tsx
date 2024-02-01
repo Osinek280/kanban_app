@@ -15,6 +15,10 @@ function AddTask({ file, fileId }: AddTaskProps) {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
+    if (title !== undefined && /^\s+$/.test(title)) {
+      return;
+    }  
+
     try {
       const response = await fetch(`/api/files/${fileId}/task`, {
         method: 'POST',
@@ -91,14 +95,18 @@ function AddTask({ file, fileId }: AddTaskProps) {
                   type='text'
                   className={styles["form-input"]}
                   placeholder="e.g Take coffee break"
-                  defaultValue={item}
                   spellCheck={false}
+                  value={item}
+                  onChange={(e) => {
+                    const updatedSubtasks = [...subtasks];
+                    updatedSubtasks[index] = e.target.value;
+                    setSubtasks(updatedSubtasks);
+                  }}
                 />
                 <button 
                   className={styles["remove-subtask-btn"]}
                   onClick={(e) => {
                     e.preventDefault();
-                    // Filtrujemy tablicę, aby usunąć element o odpowiednim indeksie
                     const updatedSubtasks = subtasks.filter((_, i) => i !== index);
                     setSubtasks(updatedSubtasks);
                   }}
