@@ -36,7 +36,7 @@ function EditTask({ task, sections, taskId, fileId }: EditTaskProps) {
 
     try {
       const response = await fetch(`/api/files/${fileId}/edit-task`, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -58,7 +58,7 @@ function EditTask({ task, sections, taskId, fileId }: EditTaskProps) {
         router.back()
       }
     } catch (error) {
-      console.error('Wystąpił błąd:', error);
+      console.error(error);
     }
   }
 

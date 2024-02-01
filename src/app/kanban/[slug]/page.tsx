@@ -79,7 +79,7 @@ const Kanban = ({ params, searchParams }: Props) => {
   return (
     <>
       {editTaskModal && <EditTask task={task} sections={file?.sections} taskId={editTaskModal} fileId={params.slug}/>}
-      {newTaskModal && <AddTask file={file}/>}
+      {newTaskModal && <AddTask file={file} fileId={params.slug}/>}
       {newSectionModal && <>section</>}
       <header className={navbarStyles["main-header"]}>
         <span className={navbarStyles.text}>{file?.name}</span>
