@@ -16,7 +16,7 @@ function EditTask({ task, sections, taskId, fileId }: EditTaskProps) {
     event.preventDefault()
 
     try {
-      const response = await fetch(`/api/files/${fileId}/edit-task`, {
+      const response = await fetch(`/api/files/${fileId}/task`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'

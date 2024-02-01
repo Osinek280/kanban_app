@@ -33,6 +33,10 @@ export interface AddTaskProps {
   fileId: string
 }
 
+export interface AddSectionProps {
+  fileId: string
+}
+
 export const primaryColors: PrimaryColors = {
   high: '#ff0000',
   medium: '#007bff',

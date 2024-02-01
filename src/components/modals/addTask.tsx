@@ -6,7 +6,7 @@ import { AddTaskProps, Priority, priorityLevels } from "@/types"
 function AddTask({ file, fileId }: AddTaskProps) {
   const [title, setTitle] = useState<string | undefined>("")
   const [description, setDescription] = useState<string | undefined>("")
-  const [category, setCategory] = useState<string | undefined>(undefined)
+  const [category, setCategory] = useState<string | undefined>(file?.sections[0])
   const [priority, setPriority] = useState<Priority | undefined>("low")
   const [subtasks, setSubtasks] = useState<string[]>([])
   const router = useRouter()
@@ -16,7 +16,7 @@ function AddTask({ file, fileId }: AddTaskProps) {
     event.preventDefault()
 
     try {
-      const response = await fetch(`/api/files/${fileId}/new-task`, {
+      const response = await fetch(`/api/files/${fileId}/task`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

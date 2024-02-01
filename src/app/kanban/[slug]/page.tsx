@@ -5,7 +5,12 @@ import navbarStyles from "@/components/navbar.module.css"
 import Link from "next/link";
 import AddTask from "@/components/modals/addTask";
 import EditTask from "@/components/modals/EditTask";
+import AddSection from "@/components/modals/addSection";
+import { HiDotsVertical } from 'react-icons/hi';
+import { BsTrash3 } from 'react-icons/bs';
 import { File, Task, PrimaryColors } from "@/types";
+import ContextMenu from "@/components/contextMenu/contextMenu";
+import { useCallback } from "react";
 
 type Props = {
   params: any
@@ -21,32 +26,60 @@ const Kanban = ({ params, searchParams }: Props) => {
 
   const [task, setTask] = useState<Task | undefined>(undefined)
 
+  const [contextIndex, setContextIndex] = useState(-1);
+
   const primaryColors: PrimaryColors = {
     high: '#ff0000',
     medium: '#007bff',
     low: '#00aa00',
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/files/${params.slug}`);
-        if (!response.ok) {
-          throw new Error('Błąd pobierania danych');
-        }
-        const data = await response.json();
-        setFile(data.file);
-      } catch (error) {
-        console.error('Błąd podczas pobierania danych:', error);
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/files/${params.slug}`);
+      if (!response.ok) {
+        throw new Error('Błąd pobierania danych');
       }
-    };
+      const data = await response.json();
+      setFile(data.file);
+    } catch (error) {
+      console.error('Błąd podczas pobierania danych:', error);
+    }
+  }, [params.slug, setFile]);
 
+  const removeTask = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, taskId: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    try {
+      const response = await fetch(`/api/files/${params.slug}/task`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          taskId: taskId
+        }),
+      });
+
+      if(!response.ok) {
+        const { message } = await response.json()
+        console.log(message)
+      }else {
+        fetchData()
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }  
+
+  useEffect(() => {
     fetchData();
 
     return () => {
       // Clean-up function
     };
-  }, [searchParams]);
+  }, [params, contextIndex, fetchData]);
 
   useEffect(() => {
     if(file) {
@@ -56,9 +89,32 @@ const Kanban = ({ params, searchParams }: Props) => {
 
   return (
     <>
-      {editTaskModal && <EditTask task={task} sections={file?.sections} taskId={editTaskModal} fileId={params.slug}/>}
-      {newTaskModal && <AddTask file={file} fileId={params.slug}/>}
-      {newSectionModal && <>section</>}
+      {contextIndex !== -1 && (
+        <div 
+          className={styles.container}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setContextIndex(-1)
+            }
+          }}
+        ></div>
+      )}
+      {editTaskModal && 
+        <EditTask 
+          task={task} 
+          sections={file?.sections} 
+          taskId={editTaskModal} 
+          fileId={params.slug}/>
+        }
+      {newTaskModal && 
+        <AddTask 
+          file={file} 
+          fileId={params.slug}
+        />}
+      {newSectionModal && 
+        <AddSection
+          fileId={params.slug}
+        />}
       <header className={navbarStyles["main-header"]}>
         <span className={navbarStyles.text}>{file?.name}</span>
         <Link href={`/kanban/${params.slug}?add-task=true`} className={navbarStyles["new-task-btn"]}>
@@ -77,6 +133,9 @@ const Kanban = ({ params, searchParams }: Props) => {
                 className={styles["task-container-header-input"]}
                 defaultValue={section}
               />
+              <span className="context-btn" onClick={() => setContextIndex(index)}>
+                <HiDotsVertical />
+              </span>
             </header>
             <ul className={styles["task-list"]}>
               {file?.tasks
@@ -92,9 +151,20 @@ const Kanban = ({ params, searchParams }: Props) => {
                     <span className={styles["task-name"]} style={{ fontWeight: 'normal' }}>
                       {task.title}
                     </span>
+                    <button 
+                      className={styles["remove-task-btn"]} 
+                      onClick={(e) => {removeTask(e, task._id)}} 
+                    >
+                      <BsTrash3 />
+                    </button>
                   </Link>
                 ))}
             </ul>
+            {contextIndex === index && (
+              <>
+                <ContextMenu section={section} fileId={params.slug} onClose={() => {setContextIndex(-1)}}/>
+              </> 
+            )}
           </div>
         ))}
       </div>
