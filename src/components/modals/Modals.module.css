@@ -12,7 +12,7 @@
 }
 
 .form {
-  /* margin-top: 160px; */
+  margin-top: 160px;
   width: 450px;
   max-height: 100%;
   overflow-y: auto;
@@ -117,15 +117,4 @@
   border: none;
   margin: 0 5px;
   margin-left: 12px;
-}
-
-.close-btn{
-  position: absolute;
-  right: 10px;
-  top: 10px;
-
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: #333;
 }

@@ -4,10 +4,10 @@ import Link from "next/link";
 import styles from "./file.module.css"
 import { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react";
-import NewKanban from "@/components/newKanban/newKanban";
+import NewKanban from "@/components/modals/newKanban";
 
 interface Task {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: string;
@@ -47,22 +47,20 @@ const Files = ({ searchParams }: Props) => {
           throw new Error('Błąd pobierania danych');
         }
         const data = await response.json();
-        console.log(typeof data.files)
         setFiles(data.files);
       } catch (error) {
         console.error('Błąd podczas pobierania danych:', error);
       }
     };
-  
-    fetchData(); 
+    
+    if (session?.user?.id) {
+      fetchData();
+    }
   
     return () => {
       
     };
-  }, []); 
-
-  console.log(files)
-  
+  }, [session]); 
 
   return(
     <>

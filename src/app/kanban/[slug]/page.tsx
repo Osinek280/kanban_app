@@ -3,18 +3,22 @@ import styles from "./kanban.module.css";
 import { useState, useEffect } from "react";
 import navbarStyles from "@/components/navbar.module.css"
 import Link from "next/link";
+import AddTask from "@/components/modals/addTask";
+import EditTask from "@/components/modals/EditTask";
+
+type Priority = "low" | "medium" | "high"
 
 interface Task {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: string;
-  priority: string;
+  priority: Priority;
   subtasks: string[];
 }
 
 interface File {
-  id: string;
+  _id: string;
   name: string;
   ownerId: string;
   sections: string[];
@@ -35,6 +39,9 @@ const Kanban = ({ params, searchParams }: Props) => {
 
   const newTaskModal = searchParams?.["add-task"]
   const newSectionModal = searchParams?.["add-section"]
+  const editTaskModal = searchParams?.edit
+
+  const [task, setTask] = useState<Task | undefined>(undefined)
 
   const primaryColors: PrimaryColors = {
     high: '#ff0000',
@@ -50,7 +57,6 @@ const Kanban = ({ params, searchParams }: Props) => {
           throw new Error('Błąd pobierania danych');
         }
         const data = await response.json();
-        console.log(data.file);
         setFile(data.file);
       } catch (error) {
         console.error('Błąd podczas pobierania danych:', error);
@@ -64,9 +70,16 @@ const Kanban = ({ params, searchParams }: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if(file) {
+      setTask(file?.tasks.find((el: Task) => el._id === editTaskModal))
+    }
+  }, [editTaskModal, file])
+
   return (
     <>
-      {newTaskModal && <>task</>}
+      {editTaskModal && <EditTask task={task} sections={file?.sections} taskId={editTaskModal} fileId={params.slug}/>}
+      {newTaskModal && <AddTask file={file}/>}
       {newSectionModal && <>section</>}
       <header className={navbarStyles["main-header"]}>
         <span className={navbarStyles.text}>{file?.name}</span>
@@ -91,7 +104,7 @@ const Kanban = ({ params, searchParams }: Props) => {
               {file?.tasks
                 .filter((task) => task.category === section)
                 .map((task, index) => (
-                  <li key={index} className={styles.task}>
+                  <Link href={`/kanban/${params.slug}?edit=${task._id}`} key={index} className={styles.task}>
                     <span
                       style={{ color: primaryColors[task.priority] }}
                       className={styles["task-primary"]}
@@ -101,7 +114,7 @@ const Kanban = ({ params, searchParams }: Props) => {
                     <span className={styles["task-name"]} style={{ fontWeight: 'normal' }}>
                       {task.title}
                     </span>
-                  </li>
+                  </Link>
                 ))}
             </ul>
           </div>

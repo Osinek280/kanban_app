@@ -27,8 +27,6 @@ export const authOptions: AuthOptions = {
           }
 
           const { email, password } = credentials;
-
-          const user = {id: ""}   
           
           try {
             await connectMongoDB();
@@ -44,12 +42,10 @@ export const authOptions: AuthOptions = {
               return null;
             }
   
-            return user;
+            return user
           } catch (error) {
             console.log("Error: ", error)
           }
-
-          return user;
         }
       })
     ],

@@ -14,15 +14,6 @@ function NewKanban () {
       }}
     >
       <form className={styles.form}>
-        <button 
-          className={styles["close-btn"]} 
-          onClick={(e) => {
-            e.preventDefault();
-            router.back()
-          }}
-        >
-          x
-        </button>
         <div className={styles["form-group"]}>
           <label className={styles["form-label"]} style={{ marginBottom: "3px" }}>
             Kanban Name
