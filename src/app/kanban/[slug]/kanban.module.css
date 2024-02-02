@@ -38,6 +38,7 @@
 }
   
 .task {
+  background: #FFFFFF;
   text-decoration: none;
   color: #333;
   display: flex;

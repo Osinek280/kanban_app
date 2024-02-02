@@ -16,8 +16,9 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
           <Image
             src="/kanban-image.svg"
             alt=""
-            width="450"
+            width="500"
             height="350"
+            priority={true}
           />
         </div>
         <div className={styles["home-right-side"]}>

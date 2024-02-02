@@ -53,6 +53,36 @@ export async function PATCH(req: Request, { params }: {params: any}) {
   }
 }
 
+export async function PUT(req: Request, { params }: {params: any}) {
+  try{
+    const {taskId, newSection} = await req.json()
+
+    console.log(taskId)
+    
+    connectMongoDB()
+
+    const file = await File.findById(params.slug)
+  
+    if(!file) {
+      return NextResponse.json({ message: "File not found." }, { status: 404 });
+    }
+
+    const taskToUpdate = file.tasks.find((task: Task) => task._id.toString() === taskId);
+
+    if (!taskToUpdate) {
+      return NextResponse.json({ message: "Task not found." }, { status: 404 });
+    }
+
+    taskToUpdate.category = newSection;
+
+    await file.save()
+    
+    return NextResponse.json({ message: "Task updated." }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ message: error }, { status: 500 });
+  }
+}
+
 export async function DELETE(req: Request, { params }: {params: any}) {
   try{
     const {taskId} = await req.json()

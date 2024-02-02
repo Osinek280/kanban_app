@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import NewKanban from "@/components/modals/newKanban";
 import { File } from "@/types";
 import EmptyState from "@/components/emptyState/emptyState";
+import Image from "next/image";
 
 type Props = {
   searchParams: Record<string, string> | null | undefined;
@@ -84,7 +85,12 @@ const Files = ({ searchParams }: Props) => {
           <Link href={`/kanban/${file._id}`} key={index} className={styles["file-con"]}>
             <div className={styles.file}>
               <span className={styles["img-box"]}>
-                <img src='/file-icon.svg' alt="file-img" />
+                <Image 
+                  src='/file-icon.svg'
+                  alt="file-img"
+                  width="150"
+                  height="150"
+                />
               </span>
               <span>{file.name}</span>
             </div>

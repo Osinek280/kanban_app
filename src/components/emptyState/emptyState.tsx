@@ -16,7 +16,8 @@ function EmptyState({value}: { value?: string }) {
           src="/empty-state.svg"
           alt="empty-state-img"
           width="450"
-          height="350"
+          height="450"
+          priority={true}
         />
       </div>
     </div>

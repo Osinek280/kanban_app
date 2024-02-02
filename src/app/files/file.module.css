@@ -20,7 +20,7 @@
   flex-direction: column;
   align-items: center;
   flex: 0 0 auto;
-  width: 170px;
+  width: 150px;
   height: 180px;
   transition: all 0s;
   border-radius: 10px;
@@ -28,7 +28,6 @@
 
 .file:hover {
   background-color: #eee;
-  border: 1px solid #ccc;
 }
 
 .file-con {

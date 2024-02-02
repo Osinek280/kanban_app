@@ -12,6 +12,8 @@ import { File, Task, PrimaryColors } from "@/types";
 import ContextMenu from "@/components/contextMenu/contextMenu";
 import { useCallback } from "react";
 import EmptyState from "@/components/emptyState/emptyState";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { useSession } from "next-auth/react";
 
 type Props = {
   params: any;
@@ -24,11 +26,13 @@ const Kanban = ({ params, searchParams }: Props) => {
   const newTaskModal = searchParams?.["add-task"];
   const newSectionModal = searchParams?.["add-section"];
   const editTaskModal = searchParams?.edit;
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [task, setTask] = useState<Task | undefined>(undefined);
 
   const [contextIndex, setContextIndex] = useState(-1);
+
+  const { data: session } = useSession();
 
   const primaryColors: PrimaryColors = {
     high: '#ff0000',
@@ -38,18 +42,23 @@ const Kanban = ({ params, searchParams }: Props) => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(`/api/files/${params.slug}`);
+      const response = await fetch(`/api/files/${params.slug}`, {
+        headers: {
+          'Authorization': `${session?.user.id}`
+        },
+      });
       if (!response.ok) {
+        setIsLoading(false);
         throw new Error('Błąd pobierania danych');
-      }else{
+      } else {
         const data = await response.json();
         setFile(data.file);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
     }
-  }, [params.slug, setFile]);
+  }, [params.slug, session?.user.id]);
 
   const removeTask = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, taskId: string) => {
     event.preventDefault();
@@ -115,6 +124,58 @@ const Kanban = ({ params, searchParams }: Props) => {
     }
   }, [editTaskModal, file]);
 
+  const onDragEnd = async (result: any) => {
+    const { source, destination, draggableId } = result;
+  
+    if (!destination) {
+      return;
+    }
+    
+    const sectionName = file && file.sections[parseInt(destination.droppableId)];
+
+    console.log(draggableId)
+    console.log(sectionName)
+    
+    if(file) {
+
+      const updateTasks = file.tasks.map((task: Task) => {
+        if (task._id === draggableId) {
+          return {
+              ...task,
+              category: sectionName
+          };
+      }
+      return task;
+      })
+
+      setFile({
+        ...file,
+        tasks: updateTasks
+      });
+    }
+
+    try {
+      const response = await fetch(`/api/files/${params.slug}/task`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          taskId: draggableId,
+          newSection: sectionName
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Błąd pobierania danych');
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
   return (
     <>
       {contextIndex !== -1 && (
@@ -127,21 +188,21 @@ const Kanban = ({ params, searchParams }: Props) => {
           }}
         ></div>
       )}
-      {editTaskModal && 
-        <EditTask 
-          task={task} 
-          sections={file?.sections} 
-          taskId={editTaskModal} 
+      {editTaskModal &&
+        <EditTask
+          task={task}
+          sections={file?.sections}
+          taskId={editTaskModal}
           fileId={params.slug}
         />
       }
-      {newTaskModal && 
-        <AddTask 
-          file={file} 
+      {newTaskModal &&
+        <AddTask
+          file={file}
           fileId={params.slug}
         />
       }
-      {newSectionModal && 
+      {newSectionModal &&
         <AddSection
           fileId={params.slug}
         />
@@ -159,53 +220,77 @@ const Kanban = ({ params, searchParams }: Props) => {
         {!isLoading && !file?.sections.length ? (
           <EmptyState value="No sections available" />
         ) : (
-          file?.sections.map((section, index) => (
-            <div className={styles["task-container"]} key={index}>
-              <header className={styles["task-container-header"]}>
-                <input
-                  spellCheck={false}
-                  className={styles["task-container-header-input"]}
-                  defaultValue={section}
-                  onBlur={(e) => updateSection(e.target.value, index)}
-                />
-                <span className="context-btn" onClick={() => setContextIndex(index)}>
-                  <HiDotsVertical />
-                </span>
-              </header>
-              <ul className={styles["task-list"]}>
-                {file?.tasks
-                  .filter((task) => task.category === section)
-                  .map((task, index) => (
-                    <Link href={`/kanban/${params.slug}?edit=${task._id}`} key={index} className={styles.task}>
-                      <span
-                        style={{ color: primaryColors[task.priority] }}
-                        className={styles["task-primary"]}
-                      >
-                        {task.priority + ' Primary'}
-                      </span>
-                      <span className={styles["task-name"]} style={{ fontWeight: 'normal' }}>
-                        {task.title}
-                      </span>
-                      <button 
-                        className={styles["remove-task-btn"]} 
-                        onClick={(e) => {removeTask(e, task._id)}} 
-                      >
-                        <BsTrash3 />
-                      </button>
-                    </Link>
-                  ))}
-              </ul>
-              {contextIndex === index && (
-                <>
-                  <ContextMenu 
-                    section={section} 
-                    fileId={params.slug} 
-                    onClose={() => setContextIndex(-1)} 
+          <DragDropContext onDragEnd={onDragEnd}>
+            {file?.sections.map((section, index) => (
+              <div className={styles["task-container"]} key={index}>
+                <header className={styles["task-container-header"]}>
+                  <input
+                    spellCheck={false}
+                    className={styles["task-container-header-input"]}
+                    defaultValue={section}
+                    onBlur={(e) => updateSection(e.target.value, index)}
                   />
-                </>
-              )}
-            </div>
-          ))
+                  <span className="context-btn" onClick={() => setContextIndex(index)}>
+                    <HiDotsVertical />
+                  </span>
+                </header>
+                <ul className={styles["task-list"]}>
+                  <Droppable droppableId={index.toString()} key={index}>
+                    {(provided) => (
+                      <div ref={provided.innerRef} {...provided.droppableProps}>
+                        {file?.tasks
+                          .filter((task) => task.category === section)
+                          .map((task, taskIndex) => (
+                            <Draggable
+                              key={task._id}
+                              draggableId={task._id}
+                              index={taskIndex}
+                            >
+                              {(provided) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                >
+                                  <Link href={`/kanban/${params.slug}?edit=${task._id}`} key={index} className={styles.task}>
+                                    <span
+                                      style={{ color: primaryColors[task.priority] }}
+                                      className={styles["task-primary"]}
+                                    >
+                                      {task.priority + ' Primary'}
+                                    </span>
+                                    <span className={styles["task-name"]}>
+                                      {task.title}
+                                    </span>
+                                    <button
+                                      className={styles["remove-task-btn"]}
+                                      onClick={(e) => { removeTask(e, task._id) }}
+                                    >
+                                      <BsTrash3 />
+                                    </button>
+                                  </Link>
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </ul>
+                {contextIndex === index && (
+                  <>
+                    <ContextMenu
+                      section={section}
+                      fileId={params.slug}
+                      onClose={() => setContextIndex(-1)}
+                    />
+                  </>
+                )}
+              </div>
+            ))}
+          </DragDropContext>
+
         )}
       </div>
     </>
