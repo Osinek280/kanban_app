@@ -147,7 +147,7 @@ const Kanban = ({ params, searchParams }: Props) => {
         />
       }
       <header className={navbarStyles["main-header"]}>
-        <span className={navbarStyles.text}>{file?.name}</span>
+        <span className={navbarStyles.text}>{file?.name ? file?.name : 'File'}</span>
         <Link href={`/kanban/${params.slug}?add-task=true`} className={navbarStyles["new-task-btn"]}>
           Add New Task
         </Link>
@@ -197,7 +197,11 @@ const Kanban = ({ params, searchParams }: Props) => {
               </ul>
               {contextIndex === index && (
                 <>
-                  <ContextMenu section={section} fileId={params.slug} onClose={() => {setContextIndex(-1)}}/>
+                  <ContextMenu 
+                    section={section} 
+                    fileId={params.slug} 
+                    onClose={() => setContextIndex(-1)} 
+                  />
                 </>
               )}
             </div>

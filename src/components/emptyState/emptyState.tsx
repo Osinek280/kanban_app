@@ -1,5 +1,6 @@
 import styles from "./emptyState.module.css"
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 function EmptyState({value}: { value?: string }) { 
   const { data: session } = useSession();
@@ -11,7 +12,12 @@ function EmptyState({value}: { value?: string }) {
           {session ? value : 
             'You need to be logged in to access this part of the application'}
         </span>
-        <img src="/empty-state.svg" alt="empty-state-img" />
+        <Image
+          src="/empty-state.svg"
+          alt="empty-state-img"
+          width="450"
+          height="350"
+        />
       </div>
     </div>
   );

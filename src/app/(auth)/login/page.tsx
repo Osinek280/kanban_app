@@ -74,10 +74,6 @@ const Login = () => {
                 {passwordVisibly ? <IoIosEye /> : <IoIosEyeOff />}
               </span>
             </div>
-            <div className={styles["remember-me"]}>
-              <input type="checkbox" id="remember-me-check-box" name="rememberMe" />
-              <label htmlFor="remember-me-check-box">Remember me</label>
-            </div>
             {error && (
               <div className={styles["error-box"]}>
                 <p className={styles["error-message"]}>{error}</p>

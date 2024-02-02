@@ -1,7 +1,15 @@
+import { useRouter } from "next/navigation"
 import styles from "./contextMenu.module.css"
-import Link from "next/link"
 
-function ContextMenu ({section, fileId, onClose}: {section: string, fileId: string, onClose: () => void}) {
+interface ContextMenuProps {
+  section: string 
+  fileId: string 
+  onClose: () => void
+}
+
+function ContextMenu ({section, fileId, onClose}: ContextMenuProps) {
+
+  const router = useRouter()
 
   const removeSection = async () => {
     try {
@@ -28,9 +36,15 @@ function ContextMenu ({section, fileId, onClose}: {section: string, fileId: stri
 
   return(
     <span className={styles["context-menu"]}>
-    <Link href={`/`} className={styles.item}>
+    <span 
+      className={styles.item}
+      onClick={() => {
+        onClose()
+        router.replace(`/kanban/${fileId}?add-task=true`)
+      }}
+    >
       Add New Task
-    </Link>
+    </span>
     <span className={styles.item} onClick={removeSection}>
       Delete
     </span>

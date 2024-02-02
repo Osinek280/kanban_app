@@ -1,0 +1,46 @@
+.log-out-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  padding: 40px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  background: #007bff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 150px; 
+  margin-bottom: 15px;
+  height: 60px;
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
+.btn-cancel {
+  background: #dc3545;
+}
+
+.btn-cancel:hover {
+  background: #c82333;
+}
+
+.heading {
+  margin-bottom: 35px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}

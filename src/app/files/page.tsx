@@ -13,6 +13,7 @@ type Props = {
 }
 
 const Files = ({ searchParams }: Props) => {
+  const [searchValue, setSearchValue] = useState("")
   const [files, setFiles] = useState<File[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const showModal = searchParams?.new
@@ -42,6 +43,8 @@ const Files = ({ searchParams }: Props) => {
     
     if (session?.user?.id) {
       fetchData();
+    }else{
+      setIsLoading(false)
     }
   
     return () => {
@@ -49,26 +52,35 @@ const Files = ({ searchParams }: Props) => {
     };
   }, [session]); 
 
+  const filteredFiles = files.filter((file) =>
+    file.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   return(
     <>
       {showModal && <NewKanban/>}
       <header className={navbarStyles["main-header"]}>
         <span className={navbarStyles.text}>Files</span>
-        <span className={navbarStyles.search}>
-          <input
-            className={navbarStyles["search-input"]} 
-            placeholder="Search"
-          />
-        </span>
-        <Link href={`/files?new=true`} className={navbarStyles["new-kanban-btn"]}>
-            Add New Kanban
-        </Link>
+        {session && 
+          <>
+            <span className={navbarStyles.search}>
+              <input
+                className={navbarStyles["search-input"]} 
+                placeholder="Search"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+            </span>
+            <Link href={`/files?new=true`} className={navbarStyles["new-kanban-btn"]}>
+              Add New Kanban
+            </Link>
+          </>}
       </header>
       {!isLoading && !files.length ? (
         <EmptyState value="No files available"/>
       ): (
         <div className={styles["files-container"]}>
-        {files.map((file, index) => (
+        {filteredFiles.map((file, index) => (
           <Link href={`/kanban/${file._id}`} key={index} className={styles["file-con"]}>
             <div className={styles.file}>
               <span className={styles["img-box"]}>

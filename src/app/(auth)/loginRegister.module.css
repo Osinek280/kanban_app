@@ -28,12 +28,6 @@
   text-align: center;
 }
 
-.remember-me{
-  display: flex;
-  gap: 10px;
-  width: 100%;
-}
-
 .user-box {
   position: relative;
 }
