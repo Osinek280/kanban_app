@@ -22,7 +22,7 @@ export default function RootLayout({
         <AuthProvider>
           <div className="root">
             <div className="App">
-              {/* <Sidebar /> */}
+              <Sidebar />
               <div className="main-container">
                 {children} 
               </div>
