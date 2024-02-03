@@ -53,7 +53,9 @@ function EditTask({ task, sections, taskId, fileId }: EditTaskProps) {
       setDescription(task?.description)
 
       setPriority(task?.priority)
-      setCategory(task?.category)
+      if(task?.category) {
+        setCategory(task?.category)
+      }
 
       if(task?.subtasks) {
         setSubtasks(task?.subtasks)
