@@ -2,7 +2,7 @@ import { connectMongoDB } from "@/lib/mongodb";
 import File from "@/models/file";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Response, { params }: { params: any }) {
+export async function GET(req: Request, { params }: { params: any }) {
 
     const userId = req.headers.get("authorization");
 
