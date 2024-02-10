@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kanban app
+The Kanban app is a project designed to help users organize their tasks efficiently using Kanban boards. Users can add tasks to separate Kanbans, manage their progress through different sections, and edit task details such as descriptions, categories, and priority levels. This application is built using Next.js 14, TypeScript, CSS Modules, bcryptjs for password hashing, react-beautiful-dnd for drag-and-drop functionality, and MongoDB for database management.
 
-## Getting Started
-
-First, run the development server:
+## Run Locally 🛠️
+ 
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/Osinek280/kanban_app.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  cd kanban_app
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the app 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Users Data
+| username        | login              | password |
+|-----------------|--------------------|----------|
+| Smith           | `smithy@23`        | 123123   |
 
-## Deploy on Vercel
+## Features
+- Adding tasks to separate kanbans
+- Managing their condition by sections
+- Editing task sections, descriptions, categories, and priority levels.
+## Tech Stack
+- Next js 14
+- TypeScript
+- CSS Modules
+- bcryptjs
+- react-beautiful-dnd
+- moongoDB
+## Data structure
+Users:
+```
+  _id: ObjectId();
+  name: string;
+  email: string;
+  password: string;
+```
+File:
+```
+  _id: string;
+  name: string;
+  ownerId: string;
+  sections: string[];
+  tasks: Task[];
+```
+Task:
+```
+  _id: string;
+  title: string;
+  description: string;
+  category: string | null;
+  priority: Priority;
+  subtasks: string[];
+```
+## App Endpoint
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```http
+  /login
+  /register
+  /files
+  /files/new
+  /kanban/[slug]
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## API Reference
+
+#### about new User
+
+```http
+  POST /register
+```
+
+#### about Sections
+
+```http
+  GET | POST | PATCH | DELETE /files/:id/section
+```
+
+#### about about Tasks
+
+```http
+  POST | PUT | PATCH | DELETE /files/:id/task
+```
+#### about File
+
+```http
+  GET /files/:id
+```
+
+#### again about File
+
+```http
+  GET | POST /file
+```
+
+![App Video](https://github.com/Osinek280/kanban_app/issues/1#issue-2128731412)
