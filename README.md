@@ -109,4 +109,4 @@ Task:
   GET | POST /file
 ```
 
-![App Video](https://github.com/Osinek280/kanban_app/issues/1#issue-2128731412)
+https://github.com/Osinek280/kanban_app/assets/74427797/d92a24ad-fff9-451f-ad56-3418909cd937
